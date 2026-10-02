@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="citadel.png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Total Battle Citadel Calculator</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          // Registracija sw.js datoteke iz tvoje public mape
+          navigator.serviceWorker.register('sw.js')
+            .then((registration) => {
+              console.log('ServiceWorker uspješno registriran! Scope:', registration.scope);
+            })
+            .catch((error) => {
+              console.error('Greška pri registraciji ServiceWorkera:', error);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>

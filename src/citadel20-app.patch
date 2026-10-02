@@ -1,0 +1,97 @@
+diff --git a/src/App.jsx b/src/App.jsx
+index 17706ec..aa62cb8 100644
+--- a/src/App.jsx
++++ b/src/App.jsx
+@@ -455,6 +455,22 @@ const WALL_KILLER_NAMES_RAW = [
+   "Siege Ballistae VI", "Catapult V", "Catapult IV", "Catapult III"
+ ];
+ 
++// Optional per-citadel troop restrictions.
++// A level/mode listed here only offers these troops in each slot (order = dropdown order).
++// A level/mode that is NOT listed keeps the default lists above.
++//   wallKiller: wall killer choices          first: First Striker choices
++//   second:     Second Striker choices       others: Third Striker + Cleanup 1-6 choices
++const CITADEL_TROOP_RULES = {
++  "20": {
++    [MODE_WITHOUT]: {
++      wallKiller: ["Siege Ballistae VI", "Siege Ballistae VII", "Catapult V", "Catapult IV", "Catapult III"],
++      first: ["Griffin VII", "Griffin VI", "Griffin V"],
++      second: ["Griffin VI", "Griffin V", "Griffin VII"],
++      others: ["Griffin VII", "Griffin VI", "Griffin V", "Vulture VII", "Vulture VI", "Vulture V"],
++    },
++  },
++};
++
+ function toNum(v) {
+   if (v === null || v === undefined) return 0;
+   const s = String(v).trim().replace(/%/g, "").replace(/\s+/g, "").replace(/,/g, ".");
+@@ -890,7 +906,7 @@ export default function App() {
+   const phoenixExtra = TB.phoenixExtra ?? {};
+   const firstStrikerAllowed = TB.firstStrikerAllowed ?? {};
+ 
+-  const [citadelLevel, setCitadelLevel] = useState(citadelKeys[0] ?? "25");
++  const [citadelLevel, setCitadelLevel] = useState(citadelKeys.includes("25") ? "25" : (citadelKeys[0] ?? "25"));
+ 
+   const [mode, setMode] = useState(MODE_WITHOUT);
+   const [strikerTroops, setStrikerTroops] = useState(() => Array(9).fill(""));
+@@ -1042,9 +1058,11 @@ export default function App() {
+     });
+   }, [mode, canon]);
+ 
++  const levelRules = CITADEL_TROOP_RULES[citadelLevel]?.[mode] ?? null;
++
+   const wallKillerPool = useMemo(() => {
+     const out = [];
+-    for (const r of WALL_KILLER_NAMES_RAW) {
++    for (const r of (levelRules?.wallKiller ?? WALL_KILLER_NAMES_RAW)) {
+       const c = canon.get(normName(r));
+       if (c) out.push(c);
+     }
+@@ -1055,23 +1073,25 @@ export default function App() {
+       seen.add(k);
+       return true;
+     });
+-  }, [canon]);
++  }, [canon, levelRules]);
+ 
+   const secondAllowed = useMemo(() => {
++    if (levelRules?.second) return levelRules.second.map((r) => canon.get(normName(r))).filter(Boolean);
+     const manticore = canon.get(normName("Manticore"));
+     const fp1 = canon.get(normName("Fire Phoenix I"));
+     const fp2 = canon.get(normName("Fire Phoenix II"));
+     if (mode === MODE_WITHOUT) return manticore ? [manticore] : [];
+     return [fp2, fp1].filter(Boolean);
+-  }, [mode, canon]);
++  }, [mode, canon, levelRules]);
+ 
+   const nonWallPool = useMemo(() => {
++    if (levelRules?.others) return levelRules.others.map((r) => canon.get(normName(r))).filter(Boolean);
+     const wallSet = new Set(wallKillerPool.map(normName));
+     return poolAll.filter((n) => !wallSet.has(normName(n)));
+-  }, [poolAll, wallKillerPool]);
++  }, [poolAll, wallKillerPool, levelRules, canon]);
+ 
+   const firstAllowed = useMemo(() => {
+-    const rawList = mode === MODE_WITH ? firstStrikerAllowed.WITH ?? [] : firstStrikerAllowed.WITHOUT ?? [];
++    const rawList = levelRules?.first ?? (mode === MODE_WITH ? firstStrikerAllowed.WITH ?? [] : firstStrikerAllowed.WITHOUT ?? []);
+     const allowedSet = new Set(nonWallPool.map(normName));
+     const out = [];
+     for (const r of rawList) {
+@@ -1086,7 +1106,7 @@ export default function App() {
+       seen.add(k);
+       return true;
+     });
+-  }, [mode, firstStrikerAllowed, nonWallPool, canon]);
++  }, [mode, firstStrikerAllowed, nonWallPool, canon, levelRules]);
+ 
+   const normalize = (current) => {
+     const next = [...current];
+@@ -1115,7 +1135,7 @@ export default function App() {
+   const [wallKillerBonusPct, setWallKillerBonusPct] = useState("");
+ 
+   useEffect(() => {
+-    if (!wallKillerTroop) setWallKillerTroop(wallKillerPool[0] ?? "");
++    if (!wallKillerTroop || !wallKillerPool.includes(wallKillerTroop)) setWallKillerTroop(wallKillerPool[0] ?? "");
+   }, [wallKillerTroop, wallKillerPool]);
+ 
+   const handleModeChange = (newMode) => {

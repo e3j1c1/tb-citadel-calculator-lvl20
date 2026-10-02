@@ -1,0 +1,47 @@
+# 🏰 Citadel Calculator by GM
+
+A highly optimized React application designed to help players calculate the perfect troop formations and minimize losses when attacking Citadels. 
+
+## ✨ Features
+
+- **Smart Striker Logic**: Automatically calculates the exact number of required troops for Wall Killers, First Strikers, and Cleanup waves based on your specific bonuses.
+- **Dynamic Adaptability**: Supports calculations both **WITH** and **WITHOUT** M8/M9 tier troops.
+- **💾 Local Storage Presets**: Save your favorite setups (troop selections and bonuses) and load them with a single click.
+- **🌍 Multi-Language Support**: Fully translated into English, German, French, Spanish, Italian, and Polish.
+- **📱 PWA Ready**: Install the calculator directly on your mobile device as a standalone app for quick access.
+- **Responsive Design**: Features a beautiful, gaming-inspired dark theme that works flawlessly on both Desktop (Command Center layout) and Mobile devices.
+
+## 🛠️ Built With
+
+- **React.js** (Hooks, Portals)
+- **Vite** (Build tool)
+- **CSS** (Custom gaming-themed UI, fully responsive)
+
+## 📖 Instructions for Use
+
+**🎯 Goal**
+Use the correct troops and bonuses to minimize losses when attacking a Citadel. The application automatically takes care of the proper troop selection logic for you.
+
+**❗ Most Important Rule**
+**Maximize First Striker Health.** In a properly formatted attack, the First Striker is the *only* troop group that should take losses.
+* The number of **FIRST STRIKER** troops **CAN** be higher than calculated.
+* All other troops **MUST** be used in the exact number as calculated.
+
+**🦅 First Striker**
+Must be your strongest flying Guardsmen: **Corax** or **Griffin**.
+
+**⚔️ Captains**
+Recommended captains for these attacks: **Wu Zetian, Brunhild, Skadi, Beowulf, Aydae, Ramses, Sofia**.
+
+**✨ Artifacts**
+Use artifacts that increase Health for **Flying**, **Guardsmen**, or the **Army**.
+
+**🔄 Recalculate**
+After ANY strength bonus change, enter the new bonuses into the calculator and press **Calculate** again. Even small changes matter!
+
+**❓ How to find your bonuses?**
+1. Attack a level 10 Citadel with 10 of each selected troop type. Copy the bonuses from the attack report into the calculator.
+2. Alternatively, select your captains, equipment, and artifacts, send the hero and dragon to the fort, and copy the exact bonuses from the barracks.
+
+## 📄 License
+© 2026 Game01Master · Non-commercial license

@@ -10,9 +10,9 @@
       "firstStrikeDamage": 115200000,
       "wallHP": 957000000,
       "normalTargets": [
-        345600000, //Life Dragon  numbers X health
-        105780000, //Pegasus Rider numbers X health
-        78000000, //Centaur numbers X health
+        345600000,
+        105780000,
+        78000000,
         77000000,
         77000000,
         77000000,
@@ -22,7 +22,7 @@
       ],
       "m8m9Targets": [
         345600000,
-        158000000, //Bears 2,400 x 66,000 = 158,400,000
+        158000000,
         78000000,
         77000000,
         77000000,
@@ -36,9 +36,9 @@
       "firstStrikeDamage": 552000000,
       "wallHP": 4050000000,
       "normalTargets": [
-        1656000000, //Life Dragon  numbers X health
-        516600000, //Pegasus Rider numbers X health
-        382200000, //Centaur numbers X health
+        1656000000,
+        516600000,
+        382200000,
         380800000,
         380800000,
         380800000,
@@ -47,9 +47,9 @@
         380800000
       ],
       "m8m9Targets": [
-        1656000000,//Life Dragon  numbers X health
-        788000000,//Bear numbers x Health - possibly? 12,000 x 66000= 792,000,000
-        382200000,//Centaur numbers X health
+        1656000000,
+        788000000,
+        382200000,
         380800000,
         380800000,
         380800000,

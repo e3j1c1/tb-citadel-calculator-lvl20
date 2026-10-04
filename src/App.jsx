@@ -1401,8 +1401,6 @@ export default function App() {
         if (dmg >= secondDmg) notes.push(t('note_order')(s.label, s.troopName, fmtInt(dmg), second.troopName, fmtInt(secondDmg)));
       }
     }
-    const usesMelee = perStriker.some((s) => s.idx >= 2 && s.troopName && ["PHH_SPEAR", "DUEL_HK_SW"].includes(getBonusGroup(s.troopName)));
-    if (usesMelee) notes.push(t('note_melee'));
     return notes;
   })();
 
